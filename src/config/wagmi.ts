@@ -10,7 +10,7 @@ import {
 
 export const config = getDefaultConfig({
   appName: "RainbowKit App",
-  projectId: "YOUR_PROJECT_ID",
+  projectId:import.meta.env.VITE_APPKIT_PROJECT_ID,
   chains: [mainnet, polygon, optimism, arbitrum, base, sepolia],
   ssr: true,
 });
