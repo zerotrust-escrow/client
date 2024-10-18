@@ -1,5 +1,6 @@
 import HomeNav from './HomeNav'
 import { homeImages } from '../../utils/images'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
   return (
@@ -14,7 +15,10 @@ const Home = () => {
               Zerotrust holds your payment securely until the job is done or the item 
               is delivered. <br className='lg:block hidden'/>  Our contracts ensure everyone gets what they agreed on
             </p>
-            <button className='text-sm bg-[#054FBB] px-14 py-3 rounded-md text-white lg:my-10 my-6'>Get Started</button>
+
+            <Link to={'/dashboard'}>
+              <button className='text-sm bg-[#054FBB] px-14 py-3 rounded-md text-white lg:my-10 my-6'>Get Started</button>
+            </Link>
               <img src={homeImages.hero} alt="" className='w-full rounded-xl'/>
           </div>
 
