@@ -1,8 +1,16 @@
 import HomeNav from './HomeNav'
 import { homeImages } from '../../utils/images'
 import { Link } from 'react-router-dom'
+import { useAccount } from 'wagmi';
+import { IoWarningOutline } from "react-icons/io5";
+import { GoArrowUpRight } from "react-icons/go";
+
 
 const Home = () => {
+
+  const account  = useAccount();
+
+
   return (
     <div className=''>
       <HomeNav />
@@ -16,8 +24,13 @@ const Home = () => {
               is delivered. <br className='lg:block hidden'/>  Our contracts ensure everyone gets what they agreed on
             </p>
 
+            {!account.address && 
+              <p className='text-red-700 bg-red-50 py-2 lg:w-[30%] w-full flex gap-3 text-xs tracking-widest m-auto justify-center mt-10 lg:px-4 px-2 rounded-md '> <IoWarningOutline />Connect Wallet Address to Proceed</p>
+            }
             <Link to={'/dashboard'}>
-              <button className='text-sm bg-[#054FBB] px-14 py-3 rounded-md text-white lg:my-10 my-6'>Get Started</button>
+              <button className='text-sm bg-[#054FBB] px-14 py-3 rounded-md flex items-center m-auto justify-center gap-2 text-white lg:my-10 lg:mt-6 my-5'>
+                {account.address ? 'Dashboard' : 'Get Started'}<GoArrowUpRight  />
+              </button>
             </Link>
               <img src={homeImages.hero} alt="" className='w-full rounded-xl'/>
           </div>
