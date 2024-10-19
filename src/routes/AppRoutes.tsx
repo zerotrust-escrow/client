@@ -1,4 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "../pages/home/Home";
+import ProtectedRoute from "../ProtectRoute";
+import DashboardRoutes from "./DashboardRoutes";
 const AppRoutes = () => {
   return (
     <Router>
@@ -6,12 +9,16 @@ const AppRoutes = () => {
         <Route
           path="/"
           element={
-            <div className="px-10">
-              <h3>Home</h3>
+            <div className="">
+              <Home />
             </div>
           }
         />
-        <Route path="*" element={"Not Found"} />
+        <Route path="*" element={<ProtectedRoute element={
+          <div className="App">
+            <DashboardRoutes />
+          </div>
+        } />} />
       </Routes>
     </Router>
   );

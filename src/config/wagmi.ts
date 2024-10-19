@@ -6,11 +6,12 @@ import {
   optimism,
   polygon,
   sepolia,
+  liskSepolia,
 } from "wagmi/chains";
 
 export const config = getDefaultConfig({
   appName: "RainbowKit App",
-  projectId:import.meta.env.VITE_APPKIT_PROJECT_ID,
-  chains: [mainnet, polygon, optimism, arbitrum, base, sepolia],
+  projectId: "YOUR_PROJECT_ID",
+  chains: [mainnet, polygon, optimism, arbitrum, base, sepolia, liskSepolia],
   ssr: true,
 });
