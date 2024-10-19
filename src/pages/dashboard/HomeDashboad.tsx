@@ -1,8 +1,23 @@
 import DashNav from "./DashNav"
 import { dashboardImages } from "../../utils/images"
 import { GoArrowUpRight } from "react-icons/go";
+import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from "@chakra-ui/react";
+import { useState } from "react";
 
 const HomeDashboad = () => {
+
+  const OverlayOne = () => (
+    <ModalOverlay
+      bg='blackAlpha.300'
+      backdropFilter='blur(3px) hue-rotate(0deg)'
+    />
+  )
+
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [overlay, setOverlay] = useState(<OverlayOne />)
+
+
   return (
     <div>
       <DashNav />
@@ -16,6 +31,29 @@ const HomeDashboad = () => {
             </button>
           </div>
         </div>
+
+        <Button
+        ml='4'
+        onClick={() => {
+          setOverlay(<OverlayOne />)
+          onOpen()
+        }}
+      >
+        Use Overlay two
+      </Button>
+      <Modal isCentered isOpen={isOpen} onClose={onClose}>
+        {overlay}
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>Custom backdrop filters!</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       </div>
     </div>
   )
