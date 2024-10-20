@@ -209,7 +209,7 @@ const CreateTransaction = () => {
                   <div className="w-full">
                     <p className="pb-2">{initiatorRole === 'Buyer' ? 'Seller' : 'Buyers'} Wallet address</p>
                     <input type="text" required 
-                      placeholder="Enter Wallet Address" 
+                      placeholder="0xA0Cf…251e" 
                       className="input text-xs input-bordered w-full" 
                       value={reciever}
                       onChange={handleReciever}
@@ -219,7 +219,7 @@ const CreateTransaction = () => {
                   <div className="w-full">
                     <p className="pb-2">{initiatorRole === 'Buyer' ? 'Seller' : 'Buyers'} Email address</p>
                     <input type="email" required 
-                      placeholder="Enter Email Address" 
+                      placeholder="buyer@example.com" 
                       className="input text-xs input-bordered w-full" 
                       value={recieverEmail}
                       onChange={handleRecieverEmail}
