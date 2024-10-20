@@ -25,7 +25,9 @@ const DashNav = () => {
       </Link>
 
       <ul className='lg:flex items-center m-auto gap-8 hidden'>
-        <li className='cursor-pointer hover:text-blue-200'>My Transactions</li>
+        <Link to={'/dashboard'}>
+          <li className='cursor-pointer hover:text-blue-200'>My Transactions</li>
+        </Link>
         <li className='cursor-pointer hover:text-blue-200'>Help</li>
       </ul>
 
