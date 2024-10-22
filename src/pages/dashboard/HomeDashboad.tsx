@@ -30,13 +30,13 @@ const HomeDashboad = () => {
   const handleBuyerClick = () => {
     setIsBuyer(true)
     setIsSeller(false)
-    setInitiatorRole("Buyer")
+    setInitiatorRole("buyer")
   }
 
   const handleSellerClick = () => {
     setIsSeller(true)
     setIsBuyer(false)
-    setInitiatorRole("Seller")
+    setInitiatorRole("seller")
   }
 
 

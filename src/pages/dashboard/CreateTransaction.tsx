@@ -2,7 +2,9 @@ import { Modal, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDi
 import { useState } from "react";
 import { GoArrowUpRight } from "react-icons/go"
 import { useLocation } from "react-router-dom";
-
+import abi from '../../config/abi.json'
+import { useWaitForTransactionReceipt, useWriteContract, useConnect, useAccount, BaseError} from 'wagmi'
+import { CONTRACT_ADDRESS } from "../../config/contractAddress";
 const CreateTransaction = () => {
 
   const OverlayOne = () => (
@@ -17,7 +19,6 @@ const CreateTransaction = () => {
   const [overlay, setOverlay] = useState(<OverlayOne />)
 
   const location = useLocation();
-  // Parsing query params
   const searchParams = new URLSearchParams(location.search);
   const itemName = searchParams.get('itemName') || "";
   const amount = searchParams.get('amount') || "";
@@ -37,7 +38,7 @@ const CreateTransaction = () => {
   const [inspectionPeriod, setInspectionPeriod] = useState<string>('')
   const [itemDescription, setItemDescription] = useState<string>('')
   const [itemCategory, setItemCategory] = useState<string>('')
-  const [reciever, setReciever] = useState<string>('')
+  const [seller, setReciever] = useState<string>('')
   const [recieverEmail, setRecieverEmail] = useState<string>('')
 
   const handleTitle = (e : any)=>{
@@ -67,6 +68,54 @@ const CreateTransaction = () => {
   }
 
   const isFormValid = transactionTitle !== "" && inspectionPeriod !== "" && itemDescription !== "" && itemCategory !== "";
+
+
+  // ==================== CONTRACT ========================
+
+  const {address} = useAccount()
+
+  const { 
+    data: hash,
+    error,
+    isPending, 
+    writeContract 
+  } = useWriteContract()
+
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) { 
+    e.preventDefault() 
+    if (!address) return  
+    
+    writeContract({
+      address: "0x557a4807479252FbBEdfBCbf2512035c3289fF8E",
+      abi,
+      functionName: 'initiateTransaction',
+      args: [
+        transactionTitle, 
+        itemName, 
+        BigInt(amount), // Assuming amount is in wei
+        BigInt(inspectionPeriod), 
+        itemDescription, 
+        itemCategory, 
+        initiatorRole, 
+        initiatorRole === 'buyer' ? address : seller, 
+        initiatorRole === 'seller' ? address : seller
+      ],
+    })
+  } 
+
+
+
+  const { isLoading: isConfirming, isSuccess: isConfirmed } = 
+    useWaitForTransactionReceipt({ 
+      hash, 
+  }) 
+
+  console.log('Successfull', isConfirmed, 'Error:', error);
+  
+
+
+
   return (
     <div className="lg:pt-[10rem] pt-[7rem] pb-[5rem] w-[100%] flex justify-center ">
       <div className="bg-white shadow-md border border-neutral-200 rounded-lg lg:p-10 p-5 py-10 lg:w-[50%] w-[95%]">
@@ -158,7 +207,7 @@ const CreateTransaction = () => {
             <ModalHeader>Transaction detail</ModalHeader>
             <ModalCloseButton />
             
-            <form action="" className="lg:text-sm text-xs lg:p-8 px-4 py-8">
+            <form action="" onSubmit={handleSubmit} className="lg:text-sm text-xs lg:p-8 px-4 py-8">
               <div>
                 <h2 className="text-lg font-semibold mb-5">Item Detail</h2>
                 <div className={'flex items-center mb-2'}>
@@ -211,7 +260,7 @@ const CreateTransaction = () => {
                     <input type="text" required 
                       placeholder="0xA0Cf…251e" 
                       className="input text-xs input-bordered w-full" 
-                      value={reciever}
+                      value={seller}
                       onChange={handleReciever}
                     />
                   </div>
@@ -237,11 +286,18 @@ const CreateTransaction = () => {
               </div>
 
               <div className="">
-                <button className={`bg-[#054FBB] hover:bg-blue-600 w-full mt-5 flex items-center m-auto justify-center gap-3 py-3 px-6 text-sm text-white rounded-md `}>
-                  Create Transaction <GoArrowUpRight />
+                <button type="submit"  className={`bg-[#054FBB] hover:bg-blue-600 w-full mt-5 flex items-center m-auto justify-center gap-3 py-3 px-6 text-sm text-white rounded-md `}>
+                 {isPending ? 'Creating . .' :  <p className="flex gap-3 items-center">Create Transaction <GoArrowUpRight /></p>}
                 </button>
               </div>
             </form>
+
+            {hash && <div>Transaction Hash: {hash}</div>}
+            {isConfirming && <div>Waiting for confirmation...</div>} 
+            {isConfirmed && <div>Transaction confirmed.</div>} 
+            {error && (
+              <div>Error: {(error as BaseError).shortMessage || error.message}</div>
+            )}
 
           </ModalContent>
         </Modal>
