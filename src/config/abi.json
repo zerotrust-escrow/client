@@ -265,7 +265,7 @@
           }
         ],
         "internalType": "struct ZeroTrust.Transaction[]",
-        "name": "",
+        "name": "bought",
         "type": "tuple[]"
       },
       {
@@ -342,7 +342,7 @@
           }
         ],
         "internalType": "struct ZeroTrust.Transaction[]",
-        "name": "",
+        "name": "sold",
         "type": "tuple[]"
       }
     ],
