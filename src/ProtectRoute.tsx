@@ -4,18 +4,21 @@ import { useAccount } from "wagmi";
 
 const ProtectedRoute = ({ element }: any) => {
   const navigate = useNavigate();
-  const account  = useAccount();
-
-  console.log('This is the account', account.address);
+  const {address}  = useAccount();
+  console.log('This is the account', address);
   
 
   useEffect(() => {
-    if (!account.address) {
+    if (!address) {
       navigate("/"); 
     }
-  }, [account, navigate]);
+  }, [address, navigate]);
 
-  return account ? element : null;
+
+  return address ? element : null;
 };
+
+
+
 
 export default ProtectedRoute;

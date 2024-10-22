@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "../pages/home/Home";
 import ProtectedRoute from "../ProtectRoute";
 import DashboardRoutes from "./DashboardRoutes";
+import DashNav from "../pages/dashboard/DashNav";
 const AppRoutes = () => {
   return (
     <Router>
@@ -16,6 +17,7 @@ const AppRoutes = () => {
         />
         <Route path="*" element={<ProtectedRoute element={
           <div className="App">
+            <DashNav />
             <DashboardRoutes />
           </div>
         } />} />
