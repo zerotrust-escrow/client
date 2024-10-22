@@ -7,6 +7,7 @@ import { GoArrowUpRight } from "react-icons/go";
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box } from '@chakra-ui/react';
 import { LuMinus } from "react-icons/lu";
 import { FiPlus } from "react-icons/fi";
+import HomeFooter from './HomeFooter';
 
 
 
@@ -67,7 +68,7 @@ const Home = () => {
           </Link>
         </div>
 
-        <div className='pb-[6rem]'>
+        <div className='lg:pb-[6rem] pb-[4rem]'>
           <h2 className='lg:text-4xl text-2xl font-bold'>Trusted by Buyers and Sellers <br /> Everywhere</h2>
           <div className='pt-5'>
             <div className='flex lg:gap-7 gap-3 py-4 pb-10'>
@@ -114,34 +115,31 @@ const Home = () => {
         </div>
 
 
-        <div>
-          <h2 className='text-4xl text-center font-bold'>Frequently Asked Question</h2>
+        <div className='lg:pb-[6rem] pb-[4rem]'>
+          <h2 className='lg:text-4xl text-2xl text-center font-bold pb-8'>Frequently Asked Question</h2>
 
           <Accordion allowMultiple>
-            <AccordionItem>
+            <AccordionItem pb={'5'} pt={'5'}>
               <h2>
                 <AccordionButton>
-                  <Box as='span' flex='1' textAlign='left'>
-                    Section 1 title
+                  <Box as='span' flex='1' textAlign='left' fontWeight={'bold'} fontSize={'15px'}>
+                    How Does Zerotrust Protect My Money?
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                commodo consequat.
+                Zerotrust made our transaction so smooth! The funds were held securely until both sides were happy. I’ll definitely use it again.
               </AccordionPanel>
             </AccordionItem>
 
-            <AccordionItem>
+            <AccordionItem pb={'5'} pt={'5'}>
               {({ isExpanded }) => (
                 <>
                   <h2>
                     <AccordionButton>
-                      <Box as='span' flex='1' textAlign='left'>
-                        Section 2 title
+                      <Box as='span' flex='1'  textAlign='left' fontWeight={'bold'} fontSize={'15px'}>
+                        How can i use Zerotrust
                       </Box>
                       {isExpanded ? (
                         <LuMinus fontSize='12px' />
@@ -151,18 +149,16 @@ const Home = () => {
                     </AccordionButton>
                   </h2>
                   <AccordionPanel pb={4}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat.
+                    Zerotrust made our transaction so smooth! The funds were held securely until both sides were happy. I’ll definitely use it again.
                   </AccordionPanel>
                 </>
               )}
             </AccordionItem>
           </Accordion>
-
+          
         </div>
       </div>
+        <HomeFooter />
     </div>
   )
 }
