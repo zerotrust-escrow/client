@@ -3,8 +3,7 @@ import { useState } from "react";
 import { GoArrowUpRight } from "react-icons/go"
 import { useLocation } from "react-router-dom";
 import abi from '../../config/abi.json'
-import { useWaitForTransactionReceipt, useWriteContract, useConnect, useAccount, BaseError} from 'wagmi'
-import { CONTRACT_ADDRESS } from "../../config/contractAddress";
+import { useWaitForTransactionReceipt, useWriteContract, useAccount, BaseError} from 'wagmi'
 const CreateTransaction = () => {
 
   const OverlayOne = () => (

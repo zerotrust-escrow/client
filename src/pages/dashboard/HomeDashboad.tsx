@@ -4,7 +4,7 @@ import { GoArrowUpRight } from "react-icons/go";
 import { Modal, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
 import {useNavigate } from 'react-router-dom';
-import { type BaseError, useAccount, useReadContract } from 'wagmi'
+import { useAccount, useReadContract } from 'wagmi'
 import abi from '../../config/abi.json'
 import { CONTRACT_ADDRESS } from "../../config/contractAddress";
 const HomeDashboad = () => {
