@@ -4,6 +4,9 @@ import { GoArrowUpRight } from "react-icons/go";
 import { Modal, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
 import {useNavigate } from 'react-router-dom';
+import { type BaseError, useAccount, useReadContract } from 'wagmi'
+import abi from '../../config/abi.json'
+import { CONTRACT_ADDRESS } from "../../config/contractAddress";
 const HomeDashboad = () => {
 
   const OverlayOne = () => (
@@ -57,7 +60,24 @@ const HomeDashboad = () => {
   }
 
   const isFormValid = (isBuyer !== false || isSeller !== false) && itemName !== "" && amount !== "" && currency !== "" && currency !== "Select Pay";  
+
+
+  // ================= CONTRACT READING ====================
+
+  const {address} = useAccount()
   
+  const { data, error, isPending } = useReadContract({
+    abi,
+    address: CONTRACT_ADDRESS,
+    functionName: 'getAllTransactionsForUser',
+    account: address,
+  })
+
+
+  console.log('All transactions', data);
+  console.log('Error', error);
+  
+
 
   return (
     <div>
@@ -75,6 +95,8 @@ const HomeDashboad = () => {
               className="bg-[#054FBB] hover:bg-blue-600 flex items-center m-auto justify-center gap-3 py-3 px-6 text-sm text-white rounded-md mt-5">
               Start New Transaction <GoArrowUpRight />
             </button>
+
+            {isPending && 'Loading . . .'}
           </div>
         </div>
 

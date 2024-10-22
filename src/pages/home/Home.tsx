@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom'
 import { useAccount } from 'wagmi';
 import { IoWarningOutline } from "react-icons/io5";
 import { GoArrowUpRight } from "react-icons/go";
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box } from '@chakra-ui/react';
+import { LuMinus } from "react-icons/lu";
+import { FiPlus } from "react-icons/fi";
+
 
 
 const Home = () => {
@@ -42,11 +46,121 @@ const Home = () => {
         </div>
 
 
-        <div className='pb-[8rem]'>
+        <div className='pb-[5rem]'>
           <h2 className='font-bold lg:text-4xl text-2xl lg:pb-10 pb-4'>How it Works</h2>
           <div className='w-full '>
               <img src={homeImages.hero2} alt="" className='w-full p-0'/>
             </div>
+        </div>
+
+        <div className='bg-blue-100 lg:p-20 p-5 lg:pb-10 rounded-xl mb-[5rem] text-center'>
+          <h2 className='lg:text-4xl text-2xl font-bold'>Satisfied with how ZEROTRUST works?</h2>
+          <p className='py-3 text-sm'>
+            Zerotrust holds your payment securely until the job is done or the item is delivered. <br /> 
+            Our contracts ensure everyone gets what they agreed on
+          </p>
+
+          <Link to={'/dashboard'}>
+            <button className='text-sm bg-[#054FBB] lg:px-14 px-6 py-3 rounded-md flex items-center m-auto justify-center gap-2 text-white lg:my-10 lg:mt-6 my-5'>
+              {account.address ? 'Start a Transaction' : 'Start a Transaction'}<GoArrowUpRight  />
+            </button>
+          </Link>
+        </div>
+
+        <div className='pb-[6rem]'>
+          <h2 className='lg:text-4xl text-2xl font-bold'>Trusted by Buyers and Sellers <br /> Everywhere</h2>
+          <div className='pt-5'>
+            <div className='flex lg:gap-7 gap-3 py-4 pb-10'>
+              <div>
+                <h2 className='font-bold  pb-2 lg:text-xl text-lg'>1400+</h2>
+                <p className='lg:text-sm text-xs'>ZEROTRUST customers</p>
+              </div>
+
+              <div>
+                <h2 className='font-bold  pb-2 lg:text-xl text-lg'>20, 000+</h2>
+                <p className='lg:text-sm text-xs'> Transaction processed</p>
+              </div>
+
+              <div>
+                <h2 className='font-bold  pb-2 lg:text-xl text-lg'>4 years +</h2>
+                <p className='lg:text-sm text-xs'>Business experience</p>
+              </div>
+            </div>
+
+
+            <div className='grid lg:grid-cols-3 grid-cols-1 items-center gap-8'>
+              <div>
+                <img className='w-full' src={homeImages.imga} alt="" />
+                <p className='text-sm pt-3'>“Zerotrust made our transaction so smooth! The funds were held securely until both sides were happy. I’ll definitely use it again”</p>
+                <h2 className='text-xl font-semibold py-2'>Tailored Qings</h2>
+                <p className='text-sm'>Founders of Tailored Qings</p>
+              </div>
+
+              <div>
+                <img className='w-full' src={homeImages.imgb} alt="" />
+                <p className='text-sm pt-3'>“Zerotrust made our transaction so smooth! The funds were held securely until both sides were happy. I’ll definitely use it again”</p>
+                <h2 className='text-xl font-semibold py-2'>Standard Seat</h2>
+                <p className='text-sm'>CEO of standard seats.com</p>
+              </div>
+
+              <div>
+                <img className='w-full' src={homeImages.imgc} alt="" />
+                <p className='text-sm pt-3'>“Zerotrust made our transaction so smooth! The funds were held securely until both sides were happy. I’ll definitely use it again”</p>
+                <h2 className='text-xl font-semibold py-2'>Dreaded Kings</h2>
+                <p className='text-sm'>Founders of Dread.locks</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <h2 className='text-4xl text-center font-bold'>Frequently Asked Question</h2>
+
+          <Accordion allowMultiple>
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box as='span' flex='1' textAlign='left'>
+                    Section 1 title
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pb={4}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                commodo consequat.
+              </AccordionPanel>
+            </AccordionItem>
+
+            <AccordionItem>
+              {({ isExpanded }) => (
+                <>
+                  <h2>
+                    <AccordionButton>
+                      <Box as='span' flex='1' textAlign='left'>
+                        Section 2 title
+                      </Box>
+                      {isExpanded ? (
+                        <LuMinus fontSize='12px' />
+                      ) : (
+                        <FiPlus fontSize='12px' />
+                      )}
+                    </AccordionButton>
+                  </h2>
+                  <AccordionPanel pb={4}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                    aliquip ex ea commodo consequat.
+                  </AccordionPanel>
+                </>
+              )}
+            </AccordionItem>
+          </Accordion>
+
         </div>
       </div>
     </div>
