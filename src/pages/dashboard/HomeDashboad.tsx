@@ -9,9 +9,9 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAccount, useReadContract } from "wagmi";
+import { useEffect, useMemo, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAccount, useReadContract, useReadContracts } from "wagmi";
 import abi from "../../config/abi.json";
 import { CONTRACT_ADDRESS } from "../../config/contractAddress";
 const HomeDashboad = () => {
@@ -76,18 +76,32 @@ const HomeDashboad = () => {
 
   const { address } = useAccount();
 
-  const { data, error, isPending } = useReadContract({
+  const { data: allTransactionIDs, error: transactionError, isPending: transactionPending } = useReadContract({
     abi,
     address: CONTRACT_ADDRESS,
     functionName: "getAllTransactionsForUser",
     account: address,
   });
 
-  console.log("All transactions", data);
-  console.log("Error", error);
 
-  // Data is an array of all the Ids of the transactions initiated by the user
-  // we can get their details buy running a loop on all the IDs and calling this function,  "getTransactionById (id)"
+  // const transactionCalls = useMemo(
+  //   () =>
+  //     allTransactionIDs?.map((transactionId: any) => ({
+  //       abi,
+  //       address: CONTRACT_ADDRESS,
+  //       functionName: "getTransactionById",
+  //       args: [transactionId],
+  //     })) || [],
+  //   [allTransactionIDs]
+  // );
+
+  // const { data: transactionData, error: transactionDataError, isPending: transactionDataPending } = useReadContracts({
+  //   contracts: transactionCalls,
+  // });
+  
+
+  console.log('this transaction', allTransactionIDs);
+
 
   return (
     <div>
@@ -110,8 +124,16 @@ const HomeDashboad = () => {
             >
               Start New Transaction <GoArrowUpRight />
             </button>
+            
+            <Link to={'/created'}>
+            <button
+              className="bg-[#054FBB] hover:bg-blue-600 flex items-center m-auto justify-center gap-3 py-3 px-6 text-sm text-white rounded-md mt-5"
+            >
+              Created <GoArrowUpRight />
+            </button>
+            </Link>
 
-            {isPending && "Loading . . ."}
+            {transactionPending && "Loading . . ."}
           </div>
         </div>
 

@@ -1,7 +1,7 @@
 import { Modal, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import { useState } from "react";
 import { GoArrowUpRight } from "react-icons/go"
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import abi from '../../config/abi.json'
 import { useWaitForTransactionReceipt, useWriteContract, useAccount, BaseError} from 'wagmi'
 const CreateTransaction = () => {
@@ -105,18 +105,26 @@ const CreateTransaction = () => {
 
 
 
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = 
+  const { isLoading: isConfirming, isSuccess: isConfirmed, data } = 
     useWaitForTransactionReceipt({ 
       hash, 
   }) 
 
-  console.log('Successfull', isConfirmed, 'Error:', error);
-  
+  const navigate = useNavigate()
 
+  if (isConfirmed) {
+    navigate("/created");
+  }
+
+
+  console.log('Successfull', hash, 'Error:', error);
+  
+  // 0xa7A02E3eD58139D1822582ff1134D8f687EB0B5c
 
 
   return (
-    <div className="lg:pt-[10rem] pt-[7rem] pb-[5rem] w-[100%] flex justify-center ">
+    <div className="lg:pt-[10rem] pt-[7rem] pb-[5rem] w-[100%] flex justify-center relative">
+
       <div className="bg-white shadow-md border border-neutral-200 rounded-lg lg:p-10 p-5 py-10 lg:w-[50%] w-[95%]">
         <h2 className="text-3xl font-bold pb-5">Start transaction</h2>
         <form action="" className="w-[100%]">
@@ -205,10 +213,27 @@ const CreateTransaction = () => {
           <ModalContent maxW={{ base: '95vw', md: '700px' }} borderRadius={'10px'}>
             <ModalHeader>Transaction detail</ModalHeader>
             <ModalCloseButton />
+
+            {error && (
+            <div role="alert" className="alert alert-error absolute py-2 px-4 m-auto  top-5 bg-red-50 border rounded-lg border-red-200 lg:w-fit max-w-fit flex items-center justify-center left-0 right-0">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 shrink-0 stroke-current"
+                fill="none"
+                viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="text-sm">{(error as BaseError).shortMessage || error.message}</span>
+            </div>
+            )}
             
-            <form action="" onSubmit={handleSubmit} className="lg:text-sm text-xs lg:p-8 px-4 py-8">
+            <form action="" onSubmit={handleSubmit} className="lg:text-sm text-xs lg:p-8 px-4 py-0">
               <div>
-                <h2 className="text-lg font-semibold mb-5">Item Detail</h2>
+                <h2 className="text-base font-semibold mb-5">Item Detail</h2>
                 <div className={'flex items-center mb-2'}>
                   <p>{itemName}</p>
                   <p className="ml-auto font-semibold">{amount} USDT</p>
@@ -227,7 +252,7 @@ const CreateTransaction = () => {
 
 
               <div>
-                <h2 className="text-lg font-semibold pb-5 pt-8">Transaction Summary</h2>
+                <h2 className="text-base font-semibold pb-3 pt-5">Transaction Summary</h2>
                 <div className={'flex items-center mb-2'}>
                   <p>Subtotal</p>
                   <p className="ml-auto">{amount} USDT</p>
@@ -250,7 +275,7 @@ const CreateTransaction = () => {
               </div>
 
               <div>
-                <h2 className="text-lg font-semibold pb-5 pt-8">{initiatorRole === 'Buyer' ? 'Seller' : 'Buyers'} Details</h2>
+                <h2 className="text-base font-semibold pb-3 pt-5">{initiatorRole === 'Buyer' ? 'Seller' : 'Buyers'} Details</h2>
 
                 <div className={'flex lg:flex-row flex-col gap-4 lg:items-center mb-2 w-full'}>
 
@@ -284,20 +309,17 @@ const CreateTransaction = () => {
                 </div>
               </div>
 
-              <div className="">
+              <div className="mb-5">
                 <button type="submit"  className={`bg-[#054FBB] hover:bg-blue-600 w-full mt-5 flex items-center m-auto justify-center gap-3 py-3 px-6 text-sm text-white rounded-md `}>
                  {isPending ? 'Creating . .' :  <p className="flex gap-3 items-center">Create Transaction <GoArrowUpRight /></p>}
                 </button>
               </div>
             </form>
 
-            {hash && <div>Transaction Hash: {hash}</div>}
-            {isConfirming && <div>Waiting for confirmation...</div>} 
-            {isConfirmed && <div>Transaction confirmed.</div>} 
-            {error && (
-              <div>Error: {(error as BaseError).shortMessage || error.message}</div>
-            )}
-
+            {/* {hash && <div>Transaction Hash: {hash}</div>} */}
+            {isConfirming && <div className="text-sm text-green-600">Waiting for confirmation...</div>} 
+            {isConfirmed && <div className="text-sm text-green-600">Transaction confirmed.</div>} 
+      
           </ModalContent>
         </Modal>
     </div>
